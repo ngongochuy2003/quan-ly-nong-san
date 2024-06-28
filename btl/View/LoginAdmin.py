@@ -64,7 +64,7 @@ class Ui_Dialog(object):
             color: #FF4500;
             font-weight: bold;
         """)
-
+        print("thu lai")
         # CSS hai hình
         pixmapAccount = QPixmap("../Access/Icon/user-solid.svg")
         self.iconAccount.setPixmap(pixmapAccount)
