@@ -128,7 +128,7 @@ class Ui_Dialog(object):
 
 
 
-
+    print("huy")
 
     #==================================================
     def retranslateUi(self, Dialog):
