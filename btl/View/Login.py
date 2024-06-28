@@ -129,7 +129,7 @@ class Ui_Dialog(object):
 
 
 
-
+    print("install plugin")
     #==================================================
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
