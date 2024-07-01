@@ -1,5 +1,6 @@
 import mysql.connector
-
+#import mysql
+# pip3 install mysql-connector-python
 class Database:
     def __init__(self):
 
@@ -7,7 +8,7 @@ class Database:
             host="localhost",
             port="3306",
             user = "root",
-            password = "daohuy2003",
+            password = "123456",
             db = "db_maytinh"
             )
     def get_connection(self):
