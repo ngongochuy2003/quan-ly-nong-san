@@ -125,6 +125,32 @@ class Ui_Dialog(object):
 #============================HÀM================================================
 
 
+    def btnDangNhap_Clicked(self):
+        from View.UiAdmin import Ui_MainWindow as Ui_Admin
+        self.login_controller = LoginController()
+        username = self.txtTaiKhoan.text()
+        password = self.txtMatKhau.text()
+        print(f"Username: {username}, Password: {password}")
+        user = self.login_controller.get_user(username)
+        print(f"User: {user}")  # Debug line
+        if user is None or user[1] != password:
+            QtWidgets.QMessageBox.warning(self.Dialog, "Lỗi",
+                                          "Tài khoản hoặc mật khẩu không chính xác")
+        elif user[2] == 1:
+            QtWidgets.QMessageBox.information(self.Dialog, "Thành công",
+                                              "Đăng nhập thành công")
+
+            self.admin_window = QtWidgets.QMainWindow()  # Create a new window for the admin UI
+            self.admin_ui = Ui_Admin(self.admin_window)  # Create a new instance of Ui_Admin
+            self.admin_ui.setupUi(self.admin_window)  # Setup the admin UI
+            self.admin_window.show()  # Show the admin window
+            self.Dialog.hide()  # Hide the login window
+        else:
+            QtWidgets.QMessageBox.warning(self.Dialog, "Lỗi",
+                                          "Bạn không có quyền truy cập")
+
+
+
 
 
 #==============================================================================

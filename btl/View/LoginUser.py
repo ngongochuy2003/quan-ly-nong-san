@@ -123,6 +123,40 @@ class Ui_Dialog(object):
         # Thiết lập thứ tự chuyển tiếp
         Dialog.setTabOrder(self.txtTaiKhoan, self.txtMatKhau)
 #============================Function===========================================
+    def openlogin(self):
+        from UiUser import Ui_MainWindow as Ui_MainWindow_User
+        from UiManager import Ui_MainWindow as Ui_MainWindow_QuanLy
+        self.login_controller = LoginController()
+        username = self.txtTaiKhoan.text()
+        password = self.txtMatKhau.text()
+        print(f"Username: {username}, Password: {password}")
+        user = self.login_controller.get_user(username)
+        print(f"User: {user}")  # Debug line
+        if user is None or user[1] != password:
+            QtWidgets.QMessageBox.warning(self.Dialog, "Lỗi",
+                                          "Tài khoản hoặc mật khẩu không chính xác")
+        elif user[2] == 3:
+            QtWidgets.QMessageBox.information(self.Dialog, "Thành công",
+                                              "Đăng nhập thành công \n"
+                                              "Xin Chào Nhân Viên ")
+
+            self.admin_window = QtWidgets.QMainWindow()  # Create a new window for the admin UI
+            self.admin_ui = Ui_MainWindow_User(self.admin_window)  # Create a new instance of Ui_Admin
+            self.admin_ui.setupUi(self.admin_window)  # Setup the admin UI
+            self.admin_window.show()  # Show the admin window
+            self.Dialog.hide()  # Hide the login window
+        elif user[2] == 2:
+            QtWidgets.QMessageBox.information(self.Dialog, "Thành công",
+                                              "Đăng nhập thành công \n"
+                                              "Xin Chào Quản Lý")
+            self.quanly_window = QtWidgets.QMainWindow()  # Create a new window for the QuanLy UI
+            self.quanly_ui = Ui_MainWindow_QuanLy(self.quanly_window)  # Create a new instance of Ui_QuanLy
+            self.quanly_ui.setupUi(self.quanly_window)  # Setup the QuanLy UI
+            self.quanly_window.show()  # Show the QuanLy window
+            self.Dialog.hide()  # Hide the login window
+        else:
+            QtWidgets.QMessageBox.warning(self.Dialog, "Lỗi",
+                                          "Bạn không có quyền truy cập")
 
     #===================================================================
     def retranslateUi(self, Dialog):
