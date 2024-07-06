@@ -8,11 +8,15 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtGui import QPixmap
+from PyQt6.QtWidgets import QHeaderView
 from PyQt6.QtCore import QSize
 from PyQt6.QtGui import QIcon
-
+from PyQt6.QtGui import QStandardItemModel, QStandardItem
+from PyQt6.QtWidgets import QMessageBox
+from Controller.SanPhamController import SanPhamController
+from datetime import date
 class Ui_Dialog(object):
-    def __init__(spip3 install PyQt6elf, main_window):
+    def __init__(self, main_window):
       self.main_window = main_window
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -31,6 +35,8 @@ class Ui_Dialog(object):
         self.tblDuLieu.setStyleSheet("background-color:white;\n"
 "color:black;")
         self.tblDuLieu.setObjectName("tblDuLieu")
+        (self.tblDuLieu.setSelectionBehavior
+         (QtWidgets.QAbstractItemView.SelectionBehavior.SelectRows))
         self.line = QtWidgets.QFrame(parent=Dialog)
         self.line.setGeometry(QtCore.QRect(0, 80, 911, 16))
         self.line.setLineWidth(3)
@@ -119,17 +125,119 @@ class Ui_Dialog(object):
                                      """)
 #==================================Sự Kiện======================================
         self.Dialog = Dialog
+        self.load_data()
+        self.tblDuLieu.doubleClicked.connect(self.row_double_clicked)
+        self.tblDuLieu.clicked.connect(self.row_clicked)
         self.btnQuayVe.clicked.connect(self.quayve)
-
+        self.btnThemSanPham.clicked.connect(self.openthemSanPham)
+        self.btnCapNhatSanPham.clicked.connect(self.capNhatSanPham)
+        self.btnXoaSanPham.clicked.connect(self.xoaSanPham)
 #==================================Hàm==========================================
+    def load_data(self):
+      model = QStandardItemModel()
+      model.setHorizontalHeaderLabels(['ID_SảnPhẩm',
+                                       'Số_Lượng', 'Tên_Sản_Phẩm',
+                                       'Đơn_Giá', 'ID_NhàCungCấp'])
+      controller = SanPhamController()
+      data = controller.getAllSanPham()
+      for row in data:
+        items = [QStandardItem(str(field)) for field in row]
+        model.appendRow(items)
+      self.tblDuLieu.setModel(model)
+
+      (self.tblDuLieu.horizontalHeader().setSectionResizeMode
+       (QHeaderView.ResizeMode.Stretch))
 
     def quayve(self):
-      from UiAdmin import Ui_MainWindow
-      self.main_window = QtWidgets.QMainWindow()  # tạo một instance mới của QMainWindow
-      self.ui = Ui_MainWindow(self.main_window)  # truyền self.main_window như là MainWindow
+      from View.UiAdmin import Ui_MainWindow
+      self.main_window = QtWidgets.QMainWindow()
+      self.ui = Ui_MainWindow(self.main_window)
       self.ui.setupUi(self.main_window)
       self.main_window.show()
       self.Dialog.hide()
+
+    def row_clicked(self, index):
+      global selected_row_data
+      selected_row_data = []
+      for i in range(self.tblDuLieu.model().columnCount()):
+        selected_row_data.append(self.tblDuLieu.model().index(index.row(), i).data())
+      print("Selected row data:", selected_row_data)
+
+
+    def openthemSanPham(self):
+      from ThemSanPham import Ui_Dialog as Ui_Dialog_ThemSanPham
+      self.window = QtWidgets.QDialog()
+      self.ui = Ui_Dialog_ThemSanPham(self.window)
+      self.ui.setupUi(self.window)
+      self.window.show()
+      self.Dialog.hide()
+
+    def xoaSanPham(self):
+      selected_row_data = []
+      index = self.tblDuLieu.currentIndex()
+      for i in range(self.tblDuLieu.model().columnCount()):
+        selected_row_data.append(self.tblDuLieu.model().index(index.row(), i).data())
+      confirm = QMessageBox.question(self.Dialog, "Xác nhận", "Bạn có chắc chắn muốn xóa tài khoản này không?",
+                                     QMessageBox.StandardButton.Yes |
+                                     QMessageBox.StandardButton.No )
+      if confirm == QMessageBox.StandardButton.Yes:
+        id = selected_row_data[0]
+        controller = SanPhamController()
+        controller.deleteSanPham(id)
+        QMessageBox.information(self.Dialog, "Thông báo", "Xóa tài khoản thành công")
+        self.load_data()
+
+    def capNhatSanPham(self):
+      from CapNhatSanPham import Ui_Dialog as Ui_Dialog_CapNhatSanPham
+      self.window = QtWidgets.QDialog()
+      self.ui = Ui_Dialog_CapNhatSanPham(self.window)
+      self.ui.setupUi(self.window)
+      self.window.show()
+      self.Dialog.hide()
+      #Truyền dữ liệu sang bên Cập Nhật Sản Phẩm
+      global selected_row_data
+      self.ui.idSanPham.setText(selected_row_data[0])
+      self.ui.txtSoLuong.setText(selected_row_data[1])
+      self.ui.txtTenSanPham.setText(selected_row_data[2])
+      self.ui.txtDonGia.setText(selected_row_data[3])
+      self.ui.txtNhaCungCap.setText(selected_row_data[4])
+
+
+    def row_double_clicked(self, index):
+      idsanpham = self.tblDuLieu.model().index(index.row(), 0).data()
+      controller = SanPhamController()
+      thongtin = controller.searchById(idsanpham)
+      # print(thongtin)
+      if not thongtin:
+        QMessageBox.information(self.Dialog, "Thông báo",
+                                "Không có thông tin nhân viên trên Database")
+      else:
+        thongtin = controller.getAllChiTietSanPham()
+        # print(thongtin)
+        from ChiTietSanPham import Ui_Dialog as Ui_DiaLog_ChiTietSanPham
+        self.window = QtWidgets.QDialog()
+        self.ui = Ui_DiaLog_ChiTietSanPham(self.window)
+        self.ui.setupUi(self.window)
+        self.window.show()
+        self.Dialog.hide()
+        # Load dữ liệu từ QuanLySanPham.py vào các trường idSanPham,
+        # txtNgayNhapKho, txtHanSuDung, txtLoai của ChiTietSanPham.py
+
+        for info in thongtin:
+          if int(info[0]) == int(idsanpham):
+            self.ui.idSanPham.setText(str(info[0]))
+            self.ui.txtNgayNhapKho.setText(str(info[1]))
+            self.ui.txtHanSuDung.setText(str(info[2]))
+            self.ui.txtLoai.setText(str(info[3]))
+
+        global selected_row_data
+        self.ui.idSanPham.setText(selected_row_data[0])
+        self.ui.txtSoLuong.setText(selected_row_data[1])
+        self.ui.txtTenSanPham.setText(selected_row_data[2])
+        self.ui.txtNhaCungCap.setText(selected_row_data[4])
+
+
+
 #==============================================================================
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
