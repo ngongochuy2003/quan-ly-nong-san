@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'LoginUser.ui'
+# Form implementation generated from reading ui file '.\LoginUser.ui'
 #
 # Created by: PyQt6 UI code generator 6.7.0
 #
@@ -8,18 +8,24 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtGui import QPixmap
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtCore import QSize
+from PyQt6.QtGui import QIcon
+from Controller.LoginController import LoginController
 
+import dialog_manager
 
 class Ui_Dialog(object):
+    def __init__(self, main_window):
+        self.main_window = main_window
     def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
         # Ẩn thanh hiện thông báo DiaLog
         Dialog.setWindowFlags(QtCore.Qt.WindowType.FramelessWindowHint)
+        Dialog.setObjectName("Dialog")
         Dialog.resize(552, 367)
-        Dialog.setFixedSize(552, 367)
         Dialog.setStyleSheet("background: #E0FFFF;")
         self.label = QtWidgets.QLabel(parent=Dialog)
-        self.label.setGeometry(QtCore.QRect(140, 60, 261, 51))
+        self.label.setGeometry(QtCore.QRect(160, 60, 261, 51))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(22)
@@ -28,7 +34,7 @@ class Ui_Dialog(object):
         self.iconAccount = QtWidgets.QLabel(parent=Dialog)
         self.iconAccount.setGeometry(QtCore.QRect(130, 150, 21, 21))
         self.iconAccount.setObjectName("iconAccount")
-        self.txtTaiKhoan = QtWidgets.QPlainTextEdit(parent=Dialog)
+        self.txtTaiKhoan = QtWidgets.QLineEdit(parent=Dialog)
         self.txtTaiKhoan.setGeometry(QtCore.QRect(160, 140, 221, 41))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
@@ -45,13 +51,20 @@ class Ui_Dialog(object):
         self.iconAccount_2 = QtWidgets.QLabel(parent=Dialog)
         self.iconAccount_2.setGeometry(QtCore.QRect(130, 220, 21, 21))
         self.iconAccount_2.setObjectName("iconAccount_2")
-        self.txtMatKhau = QtWidgets.QPlainTextEdit(parent=Dialog)
+        # thay đổi từ QLineEdit sang QTextEdit
+        self.txtMatKhau = QtWidgets.QLineEdit(parent=Dialog)
         self.txtMatKhau.setGeometry(QtCore.QRect(160, 210, 221, 41))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(9)
         self.txtMatKhau.setFont(font)
         self.txtMatKhau.setObjectName("txtMatKhau")
+        # đổi mật khẩu thannh dạng *
+        self.txtMatKhau.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
+        self.btnQuayVe = QtWidgets.QPushButton(parent=Dialog)
+        self.btnQuayVe.setGeometry(QtCore.QRect(490, 320, 61, 51))
+        self.btnQuayVe.setText("")
+        self.btnQuayVe.setObjectName("btnQuayVe")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -70,6 +83,15 @@ class Ui_Dialog(object):
         pixmapPassword = QPixmap("../Access/Icon/password-solid.svg")
         self.iconAccount_2.setPixmap(pixmapPassword)
         self.iconAccount_2.setScaledContents(True)
+
+        self.btnQuayVe.setIcon(QIcon("../Access/Icon/Quayve.png"))
+        self.btnQuayVe.setIconSize(QSize(40, 40))
+
+        self.btnQuayVe.setStyleSheet("""
+                                        background-color:#FFFF00;
+                                        border-radius: 10px;
+                                        border: 2px solid #00FF00;
+                                      """)
 
         #CSS Vùng Nhập Liệu
         self.txtTaiKhoan.setStyleSheet("""
@@ -94,11 +116,15 @@ class Ui_Dialog(object):
                 border-radius: 10px;
             """)
 
+#============================Event==============================================
+        self.Dialog = Dialog
+        self.btnQuayVe.clicked.connect(lambda: dialog_manager.openLogin(self.Dialog))
+        self.btnDangNhap.clicked.connect(self.openlogin)
+        # Thiết lập thứ tự chuyển tiếp
+        Dialog.setTabOrder(self.txtTaiKhoan, self.txtMatKhau)
+#============================Function===========================================
 
     #===================================================================
-
-
-
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
@@ -112,7 +138,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
+    ui = Ui_Dialog(Dialog)
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec())

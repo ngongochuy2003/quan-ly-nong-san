@@ -10,12 +10,14 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import QSize
 from PyQt6.QtGui import QIcon
-from Login import Ui_Dialog as Ui_Dialog_Login
 from QuanLyNhaCungCap import Ui_Dialog as Ui_Dialog_NhaCungCap
 from QuanLySanPham import Ui_Dialog as Ui_Dialog_SanPham
 from ThongKeDoanhThu import Ui_Dialog as Ui_Dialog_ThongKe
 from QuanLyTaiKhoan import Ui_Dialog as Ui_Dialog_TaiKhoan
 from QuanLyDonHang import Ui_Dialog as Ui_Dialog_DonHang
+from ChucNangKhac import Ui_Dialog as Ui_Dialog_ChucNangKhac
+import dialog_manager
+
 class Ui_MainWindow(object):
     def __init__(self, MainWindow):
         self.MainWindow = MainWindow
@@ -47,70 +49,70 @@ class Ui_MainWindow(object):
         self.line.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.line.setObjectName("line")
         self.widget_2 = QtWidgets.QWidget(parent=self.centralwidget)
-        self.widget_2.setGeometry(QtCore.QRect(0, 110, 231, 801))
+        self.widget_2.setGeometry(QtCore.QRect(0, 120, 231, 801))
         self.widget_2.setObjectName("widget_2")
         self.btnTaiKhoan = QtWidgets.QPushButton(parent=self.widget_2)
-        self.btnTaiKhoan.setGeometry(QtCore.QRect(0, 0, 221, 101))
+        self.btnTaiKhoan.setGeometry(QtCore.QRect(0, 10, 221, 91))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(18)
         self.btnTaiKhoan.setFont(font)
         self.btnTaiKhoan.setObjectName("btnTaiKhoan")
         self.btnThongKe = QtWidgets.QPushButton(parent=self.widget_2)
-        self.btnThongKe.setGeometry(QtCore.QRect(0, 140, 221, 101))
+        self.btnThongKe.setGeometry(QtCore.QRect(0, 120, 221, 81))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(18)
         self.btnThongKe.setFont(font)
         self.btnThongKe.setObjectName("btnThongKe")
         self.btnSanPham = QtWidgets.QPushButton(parent=self.widget_2)
-        self.btnSanPham.setGeometry(QtCore.QRect(0, 280, 221, 101))
+        self.btnSanPham.setGeometry(QtCore.QRect(0, 230, 221, 81))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(18)
         self.btnSanPham.setFont(font)
         self.btnSanPham.setObjectName("btnSanPham")
         self.btnNhaCungCap = QtWidgets.QPushButton(parent=self.widget_2)
-        self.btnNhaCungCap.setGeometry(QtCore.QRect(0, 420, 221, 91))
+        self.btnNhaCungCap.setGeometry(QtCore.QRect(0, 340, 221, 81))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(18)
         self.btnNhaCungCap.setFont(font)
         self.btnNhaCungCap.setObjectName("btnNhaCungCap")
         self.btnDonHang = QtWidgets.QPushButton(parent=self.widget_2)
-        self.btnDonHang.setGeometry(QtCore.QRect(0, 550, 221, 91))
+        self.btnDonHang.setGeometry(QtCore.QRect(0, 450, 221, 81))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(18)
         self.btnDonHang.setFont(font)
         self.btnDonHang.setObjectName("btnDonHang")
         self.btnDangXuat = QtWidgets.QPushButton(parent=self.widget_2)
-        self.btnDangXuat.setGeometry(QtCore.QRect(0, 690, 221, 91))
+        self.btnDangXuat.setGeometry(QtCore.QRect(0, 680, 221, 91))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(18)
         self.btnDangXuat.setFont(font)
         self.btnDangXuat.setObjectName("btnDangXuat")
         self.line_3 = QtWidgets.QFrame(parent=self.widget_2)
-        self.line_3.setGeometry(QtCore.QRect(0, 110, 231, 16))
+        self.line_3.setGeometry(QtCore.QRect(-10, 100, 231, 16))
         self.line_3.setLineWidth(2)
         self.line_3.setFrameShape(QtWidgets.QFrame.Shape.HLine)
         self.line_3.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.line_3.setObjectName("line_3")
         self.line_7 = QtWidgets.QFrame(parent=self.widget_2)
-        self.line_7.setGeometry(QtCore.QRect(0, 250, 231, 16))
+        self.line_7.setGeometry(QtCore.QRect(0, 210, 231, 16))
         self.line_7.setLineWidth(2)
         self.line_7.setFrameShape(QtWidgets.QFrame.Shape.HLine)
         self.line_7.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.line_7.setObjectName("line_7")
         self.line_6 = QtWidgets.QFrame(parent=self.widget_2)
-        self.line_6.setGeometry(QtCore.QRect(-10, 390, 241, 16))
+        self.line_6.setGeometry(QtCore.QRect(-10, 320, 241, 16))
         self.line_6.setLineWidth(2)
         self.line_6.setFrameShape(QtWidgets.QFrame.Shape.HLine)
         self.line_6.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.line_6.setObjectName("line_6")
         self.line_5 = QtWidgets.QFrame(parent=self.widget_2)
-        self.line_5.setGeometry(QtCore.QRect(0, 520, 231, 16))
+        self.line_5.setGeometry(QtCore.QRect(0, 430, 231, 16))
         self.line_5.setLineWidth(2)
         self.line_5.setFrameShape(QtWidgets.QFrame.Shape.HLine)
         self.line_5.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
@@ -121,6 +123,19 @@ class Ui_MainWindow(object):
         self.line_4.setFrameShape(QtWidgets.QFrame.Shape.HLine)
         self.line_4.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.line_4.setObjectName("line_4")
+        self.line_9 = QtWidgets.QFrame(parent=self.widget_2)
+        self.line_9.setGeometry(QtCore.QRect(0, 540, 231, 16))
+        self.line_9.setLineWidth(2)
+        self.line_9.setFrameShape(QtWidgets.QFrame.Shape.HLine)
+        self.line_9.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
+        self.line_9.setObjectName("line_9")
+        self.btnChucNangKhac = QtWidgets.QPushButton(parent=self.widget_2)
+        self.btnChucNangKhac.setGeometry(QtCore.QRect(0, 570, 221, 81))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(18)
+        self.btnChucNangKhac.setFont(font)
+        self.btnChucNangKhac.setObjectName("btnChucNangKhac")
         self.line_2 = QtWidgets.QFrame(parent=self.centralwidget)
         self.line_2.setGeometry(QtCore.QRect(220, 110, 31, 781))
         self.line_2.setLineWidth(3)
@@ -138,8 +153,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
-#================================CSS===========================================
+        #================================CSS===========================================
 
         #Css Label
         self.label.setStyleSheet("""
@@ -170,46 +184,61 @@ class Ui_MainWindow(object):
         self.btnDonHang.setIconSize(QSize(40, 40))
         self.btnDangXuat.setIcon(QIcon("../Access/Icon/log-out.png"))
         self.btnDangXuat.setIconSize(QSize(40, 40))
+        self.btnChucNangKhac.setIcon(QIcon("../Access/Icon/other.png"))
+        self.btnChucNangKhac.setIconSize(QSize(40, 40))
 
         #CSS Button
         self.btnTaiKhoan.setStyleSheet("""
                                         background-color:#FFFF00;
                                         border-radius: 10px;
+                                        border: 2px solid #00FF00;
                                        """)
         self.btnThongKe.setStyleSheet("""
                                         background-color:#FFFF00;
                                         border-radius: 10px;
+                                        border: 2px solid #00FF00;
                                      """)
         self.btnSanPham.setStyleSheet("""
                                         background-color:#FFFF00;
                                         border-radius: 10px;
+                                        border: 2px solid #00FF00;
                                       """)
         self.btnNhaCungCap.setStyleSheet("""
                                         background-color:#FFFF00;
                                         border-radius: 10px;
+                                        border: 2px solid #00FF00;
                                       """)
         self.btnDonHang.setStyleSheet("""
                                         background-color:#FFFF00;
                                         border-radius: 10px;
+                                        border: 2px solid #00FF00;
                                       """)
         self.btnDangXuat.setStyleSheet("""
                                         background-color:#FFFF00;
                                         border-radius: 10px;
+                                        border: 2px solid #00FF00;
+                                      """)
+        self.btnChucNangKhac.setStyleSheet("""
+                                        background-color:#FFFF00;
+                                        border-radius: 10px;
+                                        border: 2px solid #00FF00;
                                       """)
 
-#=================================Sự Kiện=====================================
+        #=================================Sự Kiện=====================================
         self.btnDangXuat.clicked.connect(self.openLogin)
         self.btnNhaCungCap.clicked.connect(self.openNhaCungCap)
         self.btnSanPham.clicked.connect(self.openSanPham)
         self.btnThongKe.clicked.connect(self.openThongKe)
         self.btnTaiKhoan.clicked.connect(self.openTaiKhoan)
         self.btnDonHang.clicked.connect(self.openDonHang)
+        self.btnChucNangKhac.clicked.connect(self.openChucNangKhac)
 
 
-#=================================Hàm=========================================
+    #=================================Hàm=========================================
     def openLogin(self):
+        from Login import Ui_Dialog as Ui_Dialog_Login
         self.window = QtWidgets.QDialog()
-        self.ui = Ui_Dialog_Login()
+        self.ui = Ui_Dialog_Login(self.window)
         self.ui.setupUi(self.window)
         self.window.show()
         self.MainWindow.hide()
@@ -249,9 +278,15 @@ class Ui_MainWindow(object):
         self.window.show()
         self.MainWindow.hide()
 
+    def openChucNangKhac(self):
+        self.window = QtWidgets.QDialog()
+        self.ui = Ui_Dialog_ChucNangKhac(self.window)
+        self.ui.setupUi(self.window)
+        self.window.show()
+        self.MainWindow.hide()
 
 
-#=============================================================================
+    #=============================================================================
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -262,6 +297,7 @@ class Ui_MainWindow(object):
         self.btnNhaCungCap.setText(_translate("MainWindow", "Nhà Cung Cấp"))
         self.btnDonHang.setText(_translate("MainWindow", "Đơn Hàng"))
         self.btnDangXuat.setText(_translate("MainWindow", "Đăng Xuất"))
+        self.btnChucNangKhac.setText(_translate("MainWindow", "Chức Năng Khác"))
 
 
 if __name__ == "__main__":
