@@ -1,10 +1,12 @@
 
-
-
 from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtGui import QPixmap
+from PyQt6.QtGui import QPixmap, QStandardItemModel, QStandardItem
 from PyQt6.QtCore import QSize
 from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QHeaderView
+
+from Controller.DơnHangController import DonhangController
+
 
 class Ui_Dialog(object):
     def __init__(self, main_window):
@@ -105,14 +107,13 @@ class Ui_Dialog(object):
                 """)
         #CSS Icon cho Button
         self.btnQuayVe.setIcon(QIcon("../Access/Icon/back.png"))
-        self.btnQuayVe.setIconSize(QSize(30,30))
-
+        self.btnQuayVe.setIconSize(QSize(30 ,30))
         self.btnSuaTaiKhoan.setIcon(QIcon("../Access/Icon/update.png"))
-        self.btnSuaTaiKhoan.setIconSize(QSize(30,30))
+        self.btnSuaTaiKhoan.setIconSize(QSize(30 ,30))
         self.btnXoaTaiKhoan.setIcon(QIcon("../Access/Icon/delete.png"))
-        self.btnXoaTaiKhoan.setIconSize(QSize(30,30))
+        self.btnXoaTaiKhoan.setIconSize(QSize(30 ,30))
         self.btnSearch.setIcon(QIcon("../Access/Icon/search.png"))
-        self.btnSearch.setIconSize(QSize(30,30))
+        self.btnSearch.setIconSize(QSize(30 ,30))
 
         #CSS Button
         self.btnXoaTaiKhoan.setStyleSheet("""
@@ -150,15 +151,105 @@ class Ui_Dialog(object):
 
 #================================SỰ KIỆN======================================
         self.btnQuayVe.clicked.connect(self.quayve)
+        self.tblDuLieu.doubleClicked.connect(self.hienthi)
+        self.btnSearch.clicked.connect(self.search)
+        self.btnSuaTaiKhoan.clicked.connect(self.suadonhang)
+        self.btnXoaTaiKhoan.clicked.connect(self.xoadonhang)
+        self.load_data()
         self.Dialog = Dialog
 #================================HÀM=========================================
     def quayve(self):
-      from UiAdmin import Ui_MainWindow
+      from View.UiAdmin import Ui_MainWindow
       self.main_window = QtWidgets.QMainWindow()  # tạo một instance mới của QMainWindow
       self.ui = Ui_MainWindow(self.main_window)  # truyền self.main_window như là MainWindow
       self.ui.setupUi(self.main_window)
       self.main_window.show()
       self.Dialog.hide()
+
+    def load_data(self):
+        model = QStandardItemModel()
+        model.setHorizontalHeaderLabels(['ID_Đơn Hàng', 'IDUser', 'Tên khách', 'SĐT', 'Tổng tiền'])
+        controller = DonhangController()
+        data = controller.getAllDonHang()
+        for row in data:
+            items = [QStandardItem(str(field)) for field in row]
+            model.appendRow(items)
+        self.tblDuLieu.setModel(model)
+        self.tblDuLieu.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+
+    def hienthi(self):
+        try:
+            row = self.tblDuLieu.currentIndex().row()
+            item = self.tblDuLieu.model().index(row, 0)
+
+            if item is not None:
+                idDonHang = self.tblDuLieu.model().data(item)
+                controller = DonhangController()
+                data = controller.loadctdh(idDonHang)
+                if data:
+                    model = QStandardItemModel()
+                    model.setRowCount(len(data))
+                    model.setColumnCount(7)
+                    model.setHorizontalHeaderLabels(
+                        ["ID", "ID Đơn Hàng", "ID Sản Phẩm", "Số Lượng", "Đơn Giá", "Thành Tiền", "Ngày bán"])
+                    for i, nv in enumerate(data):
+                        for j, data in enumerate(nv):
+                            model.setItem(i, j, QStandardItem(str(data)))
+                    self.tblDuLieu.setModel(model)
+
+                else:
+                    QtWidgets.QMessageBox.warning(self, "Thông báo", "Không có dữ liệu")
+            else:
+                print("No item selected.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+    def search(self):
+        if self.txtTimKiem.toPlainText().strip() != "" and self.txtTimKiem_2.toPlainText().strip() != "":
+            try:
+                model = QStandardItemModel()
+                model.setHorizontalHeaderLabels(
+                    ["ID", "ID Đơn Hàng", "ID Sản Phẩm", "Số Lượng", "Đơn Giá", "Thành Tiền", "Ngày bán"])
+                controller = DonhangController()
+                data = controller.searchChitiethoadon(self.txtTimKiem.toPlainText().strip(),
+                                                       self.txtTimKiem_2.toPlainText().strip())
+                if data:
+                    for row in data:
+                        items = [QStandardItem(str(field)) for field in row]
+                        model.appendRow(items)
+                    self.tblDuLieu.setModel(model)
+                    self.tblDuLieu.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+                else:
+                    QtWidgets.QMessageBox.information(self.Dialog, "Thông báo", "Không tìm thấy dữ liệu.")
+            except Exception as e:
+                QtWidgets.QMessageBox.warning(self.Dialog, "Lỗi", f"Đã xảy ra lỗi: {e}")
+        else:
+            QtWidgets.QMessageBox.warning(self.Dialog, "Thông báo", "Vui lòng nhập đầy đủ thông tin tìm kiếm.")
+            self.load_data()
+
+    def suadonhang(self):
+        from Suadonhangmanager import Ui_Dialog as Ui_Suadonhangmanager
+        self.window = QtWidgets.QDialog()
+        self.ui = Ui_Suadonhangmanager()
+        self.ui.setupUi(self.window)
+        self.window.show()
+
+    def xoadonhang(self):
+        row = self.tblDuLieu.currentIndex().row()
+        if row != -1:  # Ensure a row is selected
+            item = self.tblDuLieu.model().index(row, 0)
+            idDonHang = self.tblDuLieu.model().data(item)  # Assuming the first column holds the ID
+            checkctdh = DonhangController()
+            check = checkctdh.checkdata(idDonHang) # Pass the ID, not the QModelIndex
+            if check:
+                controller = DonhangController()
+                controller.deleteDonHang(idDonHang)
+                QtWidgets.QMessageBox.information(self.Dialog, "Thông báo", "Xoá đơn hàng thành công")
+                self.load_data()
+            else:
+                QtWidgets.QMessageBox.warning(self.Dialog, "Thông báo", "Bạn cần xoá chi tiết đơn hàng này trước")
+        else:
+            QtWidgets.QMessageBox.warning(self.Dialog, "Thông báo", "Vui lòng chọn đơn hàng cần xoá")
 
 
 #============================================================================
@@ -171,8 +262,8 @@ class Ui_Dialog(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Times New Roman\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
-        self.btnSuaTaiKhoan.setText(_translate("Dialog", "Sửa Thông Tin"))
-        self.btnXoaTaiKhoan.setText(_translate("Dialog", "Xóa Tài Khoản"))
+        self.btnSuaTaiKhoan.setText(_translate("Dialog", "Sửa Đơn Hàng"))
+        self.btnXoaTaiKhoan.setText(_translate("Dialog", "Xoá Đơn Hàng"))
         self.btnSearch.setText(_translate("Dialog", "Tìm Kiếm Đơn Hàng"))
         self.label_2.setText(_translate("Dialog", "Từ"))
         self.label_3.setText(_translate("Dialog", "Đến"))

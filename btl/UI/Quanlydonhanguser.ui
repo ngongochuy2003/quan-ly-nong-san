@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>911</width>
-    <height>695</height>
+    <width>903</width>
+    <height>672</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>260</x>
      <y>10</y>
      <width>331</width>
      <height>71</height>
@@ -36,6 +36,9 @@
    </property>
    <property name="text">
     <string>Quản Lý Đơn Hàng</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QTableView" name="tblDuLieu">
@@ -97,13 +100,32 @@ color:black;</string>
     <string/>
    </property>
   </widget>
+  <widget class="QPushButton" name="btnTaodinhang">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>120</y>
+     <width>161</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Tạo Đơn Hàng</string>
+   </property>
+  </widget>
   <widget class="QTextEdit" name="txtTimKiem">
    <property name="geometry">
     <rect>
-     <x>240</x>
+     <x>150</x>
      <y>130</y>
-     <width>141</width>
-     <height>51</height>
+     <width>191</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
@@ -120,12 +142,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnSuaTaiKhoan">
+  <widget class="QPushButton" name="btnSuadonhang">
    <property name="geometry">
     <rect>
-     <x>590</x>
+     <x>540</x>
      <y>120</y>
-     <width>141</width>
+     <width>161</width>
      <height>61</height>
     </rect>
    </property>
@@ -136,34 +158,15 @@ p, li { white-space: pre-wrap; }
     </font>
    </property>
    <property name="text">
-    <string>Sửa Thông Tin</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnXoaTaiKhoan">
-   <property name="geometry">
-    <rect>
-     <x>740</x>
-     <y>120</y>
-     <width>151</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Times New Roman</family>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Xóa Tài Khoản</string>
+    <string>Sửa Đơn Hàng</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btnSearch">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>120</y>
-     <width>181</width>
+     <width>121</width>
      <height>61</height>
     </rect>
    </property>
@@ -174,68 +177,32 @@ p, li { white-space: pre-wrap; }
     </font>
    </property>
    <property name="text">
-    <string>Tìm Kiếm Đơn Hàng</string>
+    <string>Tìm Kiếm</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QPushButton" name="btnTaohoadon">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>140</y>
-     <width>31</width>
-     <height>31</height>
+     <x>730</x>
+     <y>120</y>
+     <width>161</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Times New Roman</family>
-     <pointsize>16</pointsize>
+     <pointsize>14</pointsize>
     </font>
+   </property>
+   <property name="acceptDrops">
+    <bool>false</bool>
    </property>
    <property name="text">
-    <string>Từ</string>
+    <string>Chi Tiết Đơn Hàng</string>
    </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>390</x>
-     <y>140</y>
-     <width>41</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Times New Roman</family>
-     <pointsize>16</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Đến</string>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="txtTimKiem_2">
-   <property name="geometry">
-    <rect>
-     <x>430</x>
-     <y>130</y>
-     <width>141</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Times New Roman</family>
-     <pointsize>16</pointsize>
-    </font>
-   </property>
-   <property name="html">
-    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Times New Roman'; font-size:16pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   <property name="flat">
+    <bool>false</bool>
    </property>
   </widget>
  </widget>
