@@ -8,18 +8,20 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtGui import QPixmap
-
-
+from PyQt6.QtGui import QIcon
+from Controller.LoginController import LoginController
+import dialog_manager
 class Ui_Dialog(object):
     def __init__(self, main_window):
         self.main_window = main_window
 
+
+
     def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        # Ẩn thanh thông báo Dialog
+        # Ẩn thanh hiện thông báo DiaLog
         Dialog.setWindowFlags(QtCore.Qt.WindowType.FramelessWindowHint)
+        Dialog.setObjectName("Dialog")
         Dialog.resize(552, 367)
-        Dialog.setFixedSize(552, 367)
         Dialog.setStyleSheet("background: #E0FFFF;")
         self.label = QtWidgets.QLabel(parent=Dialog)
         self.label.setGeometry(QtCore.QRect(140, 60, 261, 51))
@@ -30,8 +32,9 @@ class Ui_Dialog(object):
         self.label.setObjectName("label")
         self.iconAccount = QtWidgets.QLabel(parent=Dialog)
         self.iconAccount.setGeometry(QtCore.QRect(130, 150, 21, 21))
+        self.iconAccount.setText("")
         self.iconAccount.setObjectName("iconAccount")
-        self.txtTaiKhoan = QtWidgets.QPlainTextEdit(parent=Dialog)
+        self.txtTaiKhoan = QtWidgets.QLineEdit(parent=Dialog)
         self.txtTaiKhoan.setGeometry(QtCore.QRect(160, 140, 221, 41))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
@@ -45,34 +48,45 @@ class Ui_Dialog(object):
         self.btnDangNhap.setFont(font)
         self.btnDangNhap.setStyleSheet("")
         self.btnDangNhap.setObjectName("btnDangNhap")
-        self.iconAccount_2 = QtWidgets.QLabel(parent=Dialog)
-        self.iconAccount_2.setGeometry(QtCore.QRect(130, 220, 21, 21))
-        self.iconAccount_2.setObjectName("iconAccount_2")
-        self.txtMatKhau = QtWidgets.QPlainTextEdit(parent=Dialog)
+        self.iconpassword = QtWidgets.QLabel(parent=Dialog)
+        self.iconpassword.setGeometry(QtCore.QRect(130, 220, 21, 21))
+        self.iconpassword.setText("")
+        self.iconpassword.setObjectName("iconpassword")
+        # thay đổi từ QLineEdit sang QTextEdit
+        self.txtMatKhau = QtWidgets.QLineEdit(parent=Dialog)
         self.txtMatKhau.setGeometry(QtCore.QRect(160, 210, 221, 41))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(9)
         self.txtMatKhau.setFont(font)
         self.txtMatKhau.setObjectName("txtMatKhau")
+        # đổi mật khẩu thannh dạng *
+        self.txtMatKhau.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
+        self.btnQuayVe = QtWidgets.QPushButton(parent=Dialog)
+        self.btnQuayVe.setGeometry(QtCore.QRect(510, 330, 41, 41))
+        self.btnQuayVe.setText("")
+        self.btnQuayVe.setObjectName("btnQuayVe")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
-        #============================CSS===================================
+
+        # Thiết lập thứ tự chuyển tiếp
+        Dialog.setTabOrder(self.txtTaiKhoan, self.txtMatKhau)
+#==================================CSS=========================================
         #CSS Label
         self.label.setStyleSheet("""
             color: #FF4500;
             font-weight: bold;
         """)
-        print("hs")
-        # CSS hai hình
+
+        #CSS icon
         pixmapAccount = QPixmap("../Access/Icon/user-solid.svg")
         self.iconAccount.setPixmap(pixmapAccount)
         self.iconAccount.setScaledContents(True)
 
         pixmapPassword = QPixmap("../Access/Icon/password-solid.svg")
-        self.iconAccount_2.setPixmap(pixmapPassword)
-        self.iconAccount_2.setScaledContents(True)
+        self.iconpassword.setPixmap(pixmapPassword)
+        self.iconpassword.setScaledContents(True)
 
         #CSS Vùng Nhập Liệu
         self.txtTaiKhoan.setStyleSheet("""
@@ -89,6 +103,9 @@ class Ui_Dialog(object):
             """)
         self.txtMatKhau.setPlaceholderText("Mật Khẩu") #Tạo chữ giả
 
+        #CSS icon button
+        self.btnQuayVe.setIcon(QIcon("../Access/Icon/back.png"))
+        self.btnQuayVe.setIconSize(QtCore.QSize(30, 30))
         #CSS Button
         self.btnDangNhap.setStyleSheet("""
                 background-color: #000080;
@@ -96,21 +113,52 @@ class Ui_Dialog(object):
                 font-weight: bold;
                 border-radius: 10px;
             """)
-
-    #=========================SỰ KIỆN===================================
+        self.btnQuayVe.setStyleSheet("""
+                                              background-color:#FFFF00;
+                                              border-radius: 20px;
+                                              
+                                        """)
+#============================SỰ Kiện============================================
         self.Dialog = Dialog
+        self.btnQuayVe.clicked.connect(lambda: dialog_manager.openLogin(self.Dialog))
+        self.btnDangNhap.clicked.connect(self.btnDangNhap_Clicked)
+#============================HÀM================================================
 
 
-    #===================================================================
+    def btnDangNhap_Clicked(self):
+        from View.UiAdmin import Ui_MainWindow as Ui_Admin
+        self.login_controller = LoginController()
+        username = self.txtTaiKhoan.text()
+        password = self.txtMatKhau.text()
+        print(f"Username: {username}, Password: {password}")
+        user = self.login_controller.get_user(username)
+        print(f"User: {user}")  # Debug line
+        if user is None or user[1] != password:
+            QtWidgets.QMessageBox.warning(self.Dialog, "Lỗi",
+                                          "Tài khoản hoặc mật khẩu không chính xác")
+        elif user[2] == 1:
+            QtWidgets.QMessageBox.information(self.Dialog, "Thành công",
+                                              "Đăng nhập thành công")
+
+            self.admin_window = QtWidgets.QMainWindow()  # Create a new window for the admin UI
+            self.admin_ui = Ui_Admin(self.admin_window)  # Create a new instance of Ui_Admin
+            self.admin_ui.setupUi(self.admin_window)  # Setup the admin UI
+            self.admin_window.show()  # Show the admin window
+            self.Dialog.hide()  # Hide the login window
+        else:
+            QtWidgets.QMessageBox.warning(self.Dialog, "Lỗi",
+                                          "Bạn không có quyền truy cập")
 
 
+
+
+
+#==============================================================================
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.label.setText(_translate("Dialog", "Đăng Nhập ADMIN"))
-        self.iconAccount.setText(_translate("Dialog", "d"))
         self.btnDangNhap.setText(_translate("Dialog", "Đăng Nhập"))
-        self.iconAccount_2.setText(_translate("Dialog", "d"))
 
 
 if __name__ == "__main__":

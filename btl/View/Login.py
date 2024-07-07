@@ -8,14 +8,13 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtGui import QPixmap
-from LoginAdmin import Ui_Dialog as Ui_Dialog_Admin
-from LoginUser import Ui_Dialog as Ui_Dialog_User
 
+import dialog_manager
 
 class Ui_Dialog(object):
+    def __init__(self, main_window):
+        self.main_window = main_window
     def setupUi(self, Dialog):
-        def __init__(self, MainWindow):
-            pass
         Dialog.setObjectName("Dialog")
 
         Dialog.resize(834, 608)
@@ -106,29 +105,28 @@ class Ui_Dialog(object):
 
     #========================= Sự Kiện =========================
         self.Dialog = Dialog
-        self.btnAdmin.clicked.connect(self.openLoginAdmin)
-        self.btnUser.clicked.connect(self.openLoginUser)
-
+        self.btnAdmin.clicked.connect(lambda: dialog_manager.openLoginAdmin(self.Dialog))
+        self.btnUser.clicked.connect(lambda: dialog_manager.openLoginUser(self.Dialog))
     #========================= Hàm =========================
-    def openLoginAdmin(self):
-        self.window = QtWidgets.QDialog()
-        self.ui = Ui_Dialog_Admin(self.window)
-        self.ui.setupUi(self.window)
-        self.window.show()
-        Dialog.hide()
-
-    def openLoginUser(self):
-        self.window = QtWidgets.QDialog()
-        self.ui = Ui_Dialog_User()
-        self.ui.setupUi(self.window)
-        self.window.show()
-        Dialog.hide()
-
-
+    # def openLoginAdmin(self):
+    #     self.window = QtWidgets.QDialog()
+    #     self.ui = Ui_Dialog_Admin(self.window)
+    #     self.ui.setupUi(self.window)
+    #     self.window.show()
+    #     self.Dialog.hide()
+    #
+    # def openLoginUser(self):
+    #     self.window = QtWidgets.QDialog()
+    #     self.ui = Ui_Dialog_User()
+    #     self.ui.setupUi(self.window)
+    #     self.window.show()
+    #     self.Dialog.hide()
 
 
 
-    print("huy")
+
+
+
 
     #==================================================
     def retranslateUi(self, Dialog):
@@ -145,7 +143,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
+    ui = Ui_Dialog(Dialog)
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec())
