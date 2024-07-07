@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1265</width>
-    <height>912</height>
+    <width>1257</width>
+    <height>889</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -82,35 +82,16 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>120</y>
+      <y>110</y>
       <width>231</width>
       <height>801</height>
      </rect>
     </property>
-    <widget class="QPushButton" name="btnTaiKhoan">
+    <widget class="QPushButton" name="btnDangXuat">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>10</y>
-       <width>221</width>
-       <height>91</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Times New Roman</family>
-       <pointsize>18</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Tài Khoản</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnThongKe">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>120</y>
+       <y>670</y>
        <width>221</width>
        <height>81</height>
       </rect>
@@ -122,14 +103,14 @@
       </font>
      </property>
      <property name="text">
-      <string>Thống Kê</string>
+      <string>Đăng xuất</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btnSanPham">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>230</y>
+       <y>10</y>
        <width>221</width>
        <height>81</height>
       </rect>
@@ -144,13 +125,13 @@
       <string>Sản Phẩm</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnNhaCungCap">
+    <widget class="QPushButton" name="btnThongKe">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>340</y>
+       <y>140</y>
        <width>221</width>
-       <height>81</height>
+       <height>91</height>
       </rect>
      </property>
      <property name="font">
@@ -160,16 +141,48 @@
       </font>
      </property>
      <property name="text">
-      <string>Nhà Cung Cấp</string>
+      <string>Thống Kê</string>
+     </property>
+    </widget>
+    <widget class="Line" name="line_10">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>110</y>
+       <width>231</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="lineWidth">
+      <number>2</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="Line" name="line_12">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>250</y>
+       <width>231</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="lineWidth">
+      <number>2</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
     <widget class="QPushButton" name="btnDonHang">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>450</y>
+       <y>280</y>
        <width>221</width>
-       <height>81</height>
+       <height>91</height>
       </rect>
      </property>
      <property name="font">
@@ -182,11 +195,11 @@
       <string>Đơn Hàng</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnDangXuat">
+    <widget class="QPushButton" name="btnNhaCungCap">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>680</y>
+       <y>410</y>
        <width>221</width>
        <height>91</height>
       </rect>
@@ -198,14 +211,14 @@
       </font>
      </property>
      <property name="text">
-      <string>Đăng Xuất</string>
+      <string>Nhà Cung Cấp</string>
      </property>
     </widget>
-    <widget class="Line" name="line_3">
+    <widget class="Line" name="line_13">
      <property name="geometry">
       <rect>
-       <x>-10</x>
-       <y>100</y>
+       <x>0</x>
+       <y>380</y>
        <width>231</width>
        <height>16</height>
       </rect>
@@ -217,11 +230,11 @@
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="Line" name="line_7">
+    <widget class="Line" name="line_14">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>210</y>
+       <y>510</y>
        <width>231</width>
        <height>16</height>
       </rect>
@@ -231,89 +244,6 @@
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="Line" name="line_6">
-     <property name="geometry">
-      <rect>
-       <x>-10</x>
-       <y>320</y>
-       <width>241</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="lineWidth">
-      <number>2</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="Line" name="line_5">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>430</y>
-       <width>231</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="lineWidth">
-      <number>2</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="Line" name="line_4">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>660</y>
-       <width>231</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="lineWidth">
-      <number>2</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="Line" name="line_9">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>540</y>
-       <width>231</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="lineWidth">
-      <number>2</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnChucNangKhac">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>570</y>
-       <width>221</width>
-       <height>81</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Times New Roman</family>
-       <pointsize>18</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Chức Năng Khác</string>
      </property>
     </widget>
    </widget>
@@ -323,7 +253,7 @@
       <x>220</x>
       <y>110</y>
       <width>31</width>
-      <height>781</height>
+      <height>801</height>
      </rect>
     </property>
     <property name="lineWidth">

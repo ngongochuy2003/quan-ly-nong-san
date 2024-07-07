@@ -19,7 +19,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>160</x>
      <y>60</y>
      <width>261</width>
      <height>51</height>
@@ -32,7 +32,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Đăng Nhập ADMIN</string>
+    <string>Đăng Nhập USER</string>
    </property>
   </widget>
   <widget class="QLabel" name="iconAccount">
@@ -45,7 +45,7 @@
     </rect>
    </property>
    <property name="text">
-    <string/>
+    <string>d</string>
    </property>
   </widget>
   <widget class="QPlainTextEdit" name="txtTaiKhoan">
@@ -85,7 +85,7 @@
     <string>Đăng Nhập</string>
    </property>
   </widget>
-  <widget class="QLabel" name="iconpassword">
+  <widget class="QLabel" name="iconAccount_2">
    <property name="geometry">
     <rect>
      <x>130</x>
@@ -95,7 +95,7 @@
     </rect>
    </property>
    <property name="text">
-    <string/>
+    <string>d</string>
    </property>
   </widget>
   <widget class="QPlainTextEdit" name="txtMatKhau">
@@ -117,10 +117,10 @@
   <widget class="QPushButton" name="btnQuayVe">
    <property name="geometry">
     <rect>
-     <x>510</x>
-     <y>330</y>
-     <width>41</width>
-     <height>41</height>
+     <x>490</x>
+     <y>320</y>
+     <width>61</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="text">

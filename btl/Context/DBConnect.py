@@ -7,8 +7,8 @@ class Database:
             host="localhost",
             port="3306",
             user = "root",
-            password = "daohuy2003",
-            db = "db_maytinh"
+            password = "123456",
+            db = "db_quanlynongsan"
             )
     def get_connection(self):
         if self.mydb.is_connected():
