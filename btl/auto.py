@@ -1,8 +1,8 @@
 import os
 import time
 
-ui_file = 'home.ui'
-py_file = 'home.py'
+ui_file = 'UI/QuanLyTaiKhoan.ui'
+py_file = 'View/Ui_QuanLyTaiKhoan.py'
 
 def convert_ui_to_py(ui_file, py_file):
     command = f'pyuic6 -x {ui_file} -o {py_file}'
