@@ -165,7 +165,7 @@ class Ui_MainWindow(object):
     def openDonHang(self):
         from View.Quanlydonhanguser import Ui_Dialog as DonHang
         self.window = QtWidgets.QDialog()  # tạo một instance mới của QDialog chỉ khi nó chưa tồn tại
-        self.ui = DonHang()
+        self.ui = DonHang(self.window)
         self.ui.setupUi(self.window)
         self.window.show()
         self.MainWindow.hide()

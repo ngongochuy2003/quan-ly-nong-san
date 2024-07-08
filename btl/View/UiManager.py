@@ -187,6 +187,11 @@ class Ui_MainWindow(object):
 
     #=================================Sự Kiện=====================================
         self.btnDangXuat.clicked.connect(self.openLogin)
+        self.btnSanPham.clicked.connect(self.openSanPham)
+        self.btnThongKe.clicked.connect(self.openThongKe)
+        self.btnDonHang.clicked.connect(self.openDonHang)
+        self.btnNhaCungCap.clicked.connect(self.openNhaCungCap)
+
 #===============================================================================
     def openLogin(self):
         from Login import Ui_Dialog as Ui_Dialog_Login
@@ -195,7 +200,34 @@ class Ui_MainWindow(object):
         self.ui.setupUi(self.window)
         self.window.show()
         self.MainWindow.hide()
-
+    def openSanPham(self):
+        from QuanLySanPhamManager import Ui_Dialog as Ui_Dialog_SanPham
+        self.window = QtWidgets.QDialog()
+        self.ui = Ui_Dialog_SanPham(self.window)
+        self.ui.setupUi(self.window)
+        self.window.show()
+        self.MainWindow.hide()
+    def openThongKe(self):
+        from ThongKeDoanhThuManager import Ui_Dialog as Ui_Dialog_ThongKe
+        self.window = QtWidgets.QDialog()
+        self.ui = Ui_Dialog_ThongKe()
+        self.ui.setupUi(self.window)
+        self.window.show()
+        self.MainWindow.hide()
+    def openDonHang(self):
+        from Quanlydonhangmanager import Ui_Dialog as Ui_Dialog_DonHang
+        self.window = QtWidgets.QDialog()
+        self.ui = Ui_Dialog_DonHang(self.window)
+        self.ui.setupUi(self.window)
+        self.window.show()
+        self.MainWindow.hide()
+    def openNhaCungCap(self):
+        from QuanLyNhaCungCapManager import Ui_Dialog as Ui_Dialog_NhaCungCap
+        self.window = QtWidgets.QDialog()
+        self.ui = Ui_Dialog_NhaCungCap(self.window)
+        self.ui.setupUi(self.window)
+        self.window.show()
+        self.MainWindow.hide()
 
 
 
